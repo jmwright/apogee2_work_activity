@@ -26,49 +26,46 @@ class MyClientFactory(protocol.ClientFactory):
         self.app.print_message("Connection Failed")
 
 from kivy.app import App
-from kivy.uix.button import Button
-from kivy.uix.label import Label
-from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.widget import Widget
+from kivy.properties import NumericProperty, ObjectProperty
+from kivy.garden.graph import Graph, MeshLinePlot
 
 
-class ShepardClientApp(App):
-    connection = None
-
-    def build(self):
-        root = self.setup_gui()
-        self.connect_to_server()
-        return root
-
-    def setup_gui(self):
-        self.label = Label(text='Connecting...\n', size_hint_y=0.1)
-        self.thrust_lbl = Label(text='N/A', size_hint_x=0.333)
-        self.button = Button(text='Start', font_size=14)
-        self.button.bind(on_press=self.btn_callback)
-        self.layout = BoxLayout(orientation='vertical')
-        self.layout.add_widget(self.thrust_lbl)
-        self.layout.add_widget(self.button)
-        self.layout.add_widget(self.label)
-        return self.layout
+class ShepardClientGUI(Widget):
+    thrust = NumericProperty(0)
+    start_btn = ObjectProperty(None)
+    thrust_lbl = ObjectProperty(None)
+    status_lbl = ObjectProperty(None)
 
     def connect_to_server(self):
         reactor.connectTCP('localhost', 9999, MyClientFactory(self))
 
     def on_connection(self, connection):
-        self.print_message("Connected succesfully!")
+        self.print_message("Connected to server")
         self.connection = connection
+
+        self.start_btn.bind(on_press=self.btn_callback)
 
     def send_message(self, *args):
         if self.connection:
             self.connection.write('R')
 
     def print_message(self, msg):
-        self.label.text += msg + '\n'
+        self.status_lbl.text = msg
 
     def handle_data(self, data):
-        self.thrust_lbl.text = "Thrust: " + str(round(float(data.split(',')[1]), 3))
+        self.thrust = round(float(data.split(',')[1]), 3)
 
     def btn_callback(instance, value):
         instance.send_message()
+
+class ShepardClientApp(App):
+    connection = None
+
+    def build(self):
+        gui = ShepardClientGUI()
+        gui.connect_to_server()
+        return gui
 
 if __name__ == '__main__':
     ShepardClientApp().run()

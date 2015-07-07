@@ -7,7 +7,6 @@ from random import randint
 
 
 class PongPaddle(Widget):
-
     score = NumericProperty(0)
 
     def bounce_ball(self, ball):

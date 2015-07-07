@@ -1,0 +1,46 @@
+#:kivy 1.9.0
+
+<ShepardClientGUI>:
+    start_btn: start
+    thrust_lbl: thrust_reading
+    status_lbl: status
+
+    Label:
+        id: thrust_reading
+        font_size: 40
+        center_x: root.width * 2.0 / 4.0
+        top: root.top - 10
+        text: "Thrust: " + str(root.thrust)
+
+    Button:
+        id: start
+        font_size: 20
+        pos: 20, 20
+        top: root.top - 10
+        text: "Start"
+
+    Graph:
+        id: curve
+        size: root.width, root.height - 125
+        top: root.height - 110
+        xlabel: 'X'
+        ylabel: 'Y'
+        x_ticks_minor: 5
+        x_ticks_major: 25
+        y_ticks_major: 1
+        y_grid_label: True
+        x_grid_label: True
+        padding: 5
+        x_grid: True
+        y_grid: True
+        xmin: 0
+        xmax: 100
+        ymin: 0
+        ymax: 40
+
+    Label:
+        id: status
+        font_size: 14
+        top: root.top - root.height + 20
+        size: root.width, 20
+        text: "Waiting..."
