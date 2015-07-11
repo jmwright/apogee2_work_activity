@@ -26,6 +26,7 @@ class MyClientFactory(protocol.ClientFactory):
     def clientConnectionFailed(self, conn, reason):
         self.app.print_message("Connection Failed")
 
+from functools import partial
 from kivy.app import App
 from kivy.clock import Clock
 from kivy.modules import keybinding
@@ -122,7 +123,12 @@ class ShepardClientGUI(Widget):
             # Invalid input
             pass
 
-        Clock.schedule_interval(instance.set_not_running(instance, False), 1.90)
+        Clock.schedule_once(instance.set_not_running, 1.9)
+
+    def set_not_running(self, instance):
+        # Red
+        self.tgl_btn.background_color = [255, 0, 0, 255]
+
 
 class ShepardClientApp(App):
     connection = None
