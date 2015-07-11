@@ -62,6 +62,10 @@ class ShepardClientGUI(Widget):
 
     def btn_callback(instance, value):
         instance.send_message()
+        instance.button_color_green(instance.armed_btn)
+
+    def button_color_green(self, button):
+        button.background_color([0, 204, 0, 255])
 
     def set_armed(instance, armed):
         """
