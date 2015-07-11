@@ -69,29 +69,43 @@
 
     Label:
         font_size: 40
-        center_x: root.width * 2.0 / 2.1 - 100
+        center_x: root.width * 2.0 / 2.1 - 150
         top: root.top - 300
         text: "Thrust: "
 
     Label:
         id: thrust_reading
         font_size: 40
-        center_x: root.width * 2.0 / 2.1
+        center_x: root.width * 2.0 / 2.1 - 50
         top: root.top - 300
         text: str(root.thrust)
 
     Label:
+        id: thrust_unit
         font_size: 40
-        center_x: root.width * 2.0 / 2.1 - 150
+        center_x: root.width * 2.0 / 2.1
+        top: root.top - 300
+        text: "N"
+
+    Label:
+        font_size: 40
+        center_x: root.width * 2.0 / 2.1 - 200
         top: root.top - 400
         text: "Temperature: "
 
     Label:
         id: temp_reading
         font_size: 40
-        center_x: root.width * 2.0 / 2.1
+        center_x: root.width * 2.0 / 2.1 - 50
         top: root.top - 400
         text: str(root.temp)
+
+    Label:
+        id: temp_unit
+        font_size: 40
+        center_x: root.width * 2.0 / 2.1
+        top: root.top - 400
+        text: "C"
 
     Label:
         id: status
