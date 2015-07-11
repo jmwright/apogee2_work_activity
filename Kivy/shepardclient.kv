@@ -6,7 +6,9 @@
     cont_btn: continuity
     tgl_btn: running
     thrust_lbl: thrust_reading
+    thrust_unit_lbl: thrust_unit
     temp_lbl: temp_reading
+    temp_unit_lbl: temp_unit
     status_lbl: status
 
     #canvas.before:
@@ -64,8 +66,9 @@
     Image:
         id: video
         center_x: root.width * 2.0 / 2.5
-        top: root.top - 20
+        top: root.top - 10
         source: "Shepard_v1.0_Firing_D_Motor.png"
+        size: 750, 750
 
     Label:
         font_size: 40
