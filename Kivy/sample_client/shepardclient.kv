@@ -2,15 +2,8 @@
 
 <ShepardClientGUI>:
     start_btn: start
-    armed_btn: armed
     thrust_lbl: thrust_reading
     status_lbl: status
-
-    ToggleButton:
-        id: armed
-        font_size: 40
-        text: 'Stat1'
-        background_color: [255, 0, 0, 255]
 
     Label:
         id: thrust_reading
@@ -25,6 +18,25 @@
         pos: 20, 20
         top: root.top - 10
         text: "Start"
+
+    Graph:
+        id: curve
+        size: root.width, root.height - 125
+        top: root.height - 110
+        xlabel: 'X'
+        ylabel: 'Y'
+        x_ticks_minor: 5
+        x_ticks_major: 25
+        y_ticks_major: 1
+        y_grid_label: True
+        x_grid_label: True
+        padding: 5
+        x_grid: True
+        y_grid: True
+        xmin: 0
+        xmax: 100
+        ymin: 0
+        ymax: 40
 
     Label:
         id: status
