@@ -33,6 +33,7 @@ from kivy.garden.graph import Graph, MeshLinePlot
 
 class ShepardClientGUI(Widget):
     thrust = NumericProperty(0)
+    temp = NumericProperty(0)
     start_btn = ObjectProperty(None)
     thrust_lbl = ObjectProperty(None)
     status_lbl = ObjectProperty(None)

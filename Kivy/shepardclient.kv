@@ -3,28 +3,95 @@
 <ShepardClientGUI>:
     start_btn: start
     armed_btn: armed
+    cont_btn: continuity
+    tgl_btn: running
     thrust_lbl: thrust_reading
+    temp_lbl: temp_reading
     status_lbl: status
+
+    #canvas.before:
+    #    Color:
+    #        rgba: 64, 64, 64, 1
+    #    Rectangle:
+    #        pos: self.pos
+    #        size: self.size
 
     ToggleButton:
         id: armed
         font_size: 40
-        text: 'Stat1'
+        text: 'Armed'
         background_color: [255, 0, 0, 255]
+        pos: 20, 20
+        top: root.top - 10
+        width: 150
+
+    ToggleButton:
+        id: continuity
+        font_size: 40
+        text: 'Cont'
+        background_color: [255, 0, 0, 255]
+        pos: 200, 20
+        top: root.top - 10
+        width: 150
+
+    ToggleButton:
+        id: running
+        font_size: 40
+        text: 'Running'
+        background_color: [255, 0, 0, 255]
+        pos: 380, 20
+        top: root.top - 10
+        width: 150
+
+    Button:
+        id: start
+        font_size: 40
+        pos: 20, 20
+        top: root.top - 200
+        text: "Go!"
+        width: 150
+        background_color: [0, 255, 0, 255]
+
+    Button:
+        id: abort
+        font_size: 40
+        pos: 200, 20
+        top: root.top - 200
+        text: "Abort"
+        width: 150
+        background_color: [255, 0, 0, 255]
+
+    Image:
+        id: video
+        center_x: root.width * 2.0 / 2.5
+        top: root.top - 20
+        source:
+
+    Label:
+        font_size: 40
+        center_x: root.width * 2.0 / 2.1 - 100
+        top: root.top - 300
+        text: "Thrust: "
 
     Label:
         id: thrust_reading
         font_size: 40
-        center_x: root.width * 2.0 / 4.0
-        top: root.top - 10
-        text: "Thrust: " + str(root.thrust)
+        center_x: root.width * 2.0 / 2.1
+        top: root.top - 300
+        text: str(root.thrust)
 
-    Button:
-        id: start
-        font_size: 20
-        pos: 20, 20
-        top: root.top - 10
-        text: "Start"
+    Label:
+        font_size: 40
+        center_x: root.width * 2.0 / 2.1 - 100
+        top: root.top - 400
+        text: "Temperature: "
+
+    Label:
+        id: temp_reading
+        font_size: 40
+        center_x: root.width * 2.0 / 2.1
+        top: root.top - 400
+        text: str(root.temp)
 
     Label:
         id: status
