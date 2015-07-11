@@ -27,8 +27,11 @@ class MyClientFactory(protocol.ClientFactory):
         self.app.print_message("Connection Failed")
 
 from kivy.app import App
+from kivy.clock import Clock
+from kivy.modules import keybinding
+from kivy.core.window import Window
 from kivy.uix.widget import Widget
-from kivy.properties import NumericProperty, ObjectProperty
+from kivy.properties import NumericProperty, ObjectProperty, ListProperty
 from kivy.garden.graph import Graph, MeshLinePlot
 
 
@@ -49,24 +52,27 @@ class ShepardClientGUI(Widget):
         self.connection = connection
 
         self.start_btn.bind(on_press=self.btn_callback)
-        self.set_armed(False)
+        self.set_armed(True)
+        self.set_cont(True)
 
     def send_message(self, *args):
         if self.connection:
             self.connection.write('R')
 
+            self.set_running(True)
+
     def print_message(self, msg):
         self.status_lbl.text = msg
 
     def handle_data(self, data):
-        self.thrust = round(float(data.split(',')[1]), 3)
+        self.thrust = round(float(data.split(',')[1]), 1)
 
     def btn_callback(instance, value):
         instance.send_message()
         instance.button_color_green(instance.armed_btn)
 
     def button_color_green(self, button):
-        button.background_color([0, 204, 0, 255])
+        button.background_color = [0, 204, 0, 255]
 
     def set_armed(instance, armed):
         """
@@ -76,14 +82,47 @@ class ShepardClientGUI(Widget):
         """
         if armed is False:
             # Red
-            instance.armed_btn.background_color([255, 0, 0, 255])
+            instance.armed_btn.background_color = [255, 0, 0, 255]
         elif armed is True:
             # Green
-            instance.armed_btn.background_color([0, 204, 0, 255])
+            instance.armed_btn.background_color = [0, 204, 0, 255]
         else:
             # Invalid input
             pass
 
+    def set_cont(instance, cont):
+        """
+        Set the continuity button state
+        :param OK: true or false
+        :return: None
+        """
+        if cont is False:
+            # Red
+            instance.cont_btn.background_color = [255, 0, 0, 255]
+        elif cont is True:
+            # Green
+            instance.cont_btn.background_color = [0, 204, 0, 255]
+        else:
+            # Invalid input
+            pass
+
+    def set_running(instance, tgl):
+        """
+        Set the continuity button state
+        :param OK: true or false
+        :return: None
+        """
+        if tgl is False:
+            # Red
+            instance.tgl_btn.background_color = [255, 0, 0, 255]
+        elif tgl is True:
+            # Green
+            instance.tgl_btn.background_color = [0, 204, 0, 255]
+        else:
+            # Invalid input
+            pass
+
+        Clock.schedule_interval(set_not_running(False), 1.90)
 
 class ShepardClientApp(App):
     connection = None
