@@ -122,7 +122,7 @@ class ShepardClientGUI(Widget):
             # Invalid input
             pass
 
-        Clock.schedule_interval(set_not_running(False), 1.90)
+        Clock.schedule_interval(instance.set_not_running(instance, False), 1.90)
 
 class ShepardClientApp(App):
     connection = None
