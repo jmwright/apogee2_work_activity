@@ -19,6 +19,7 @@ class MyClientFactory(protocol.ClientFactory):
     def __init__(self, app):
         self.app = app
 
+
     def clientConnectionLost(self, conn, reason):
         self.app.print_message("Connection Lost")
 
@@ -35,8 +36,10 @@ class ShepardClientGUI(Widget):
     thrust = NumericProperty(0)
     temp = NumericProperty(0)
     start_btn = ObjectProperty(None)
+    armed_btn = ObjectProperty(None)
     thrust_lbl = ObjectProperty(None)
     status_lbl = ObjectProperty(None)
+
 
     def connect_to_server(self):
         reactor.connectTCP('localhost', 9999, MyClientFactory(self))
@@ -46,6 +49,7 @@ class ShepardClientGUI(Widget):
         self.connection = connection
 
         self.start_btn.bind(on_press=self.btn_callback)
+        self.set_armed(False)
 
     def send_message(self, *args):
         if self.connection:
@@ -59,6 +63,27 @@ class ShepardClientGUI(Widget):
 
     def btn_callback(instance, value):
         instance.send_message()
+        instance.button_color_green(instance.armed_btn)
+
+    def button_color_green(self, button):
+        button.background_color([0, 204, 0, 255])
+
+    def set_armed(instance, armed):
+        """
+        Set the armed button state
+        :param OK: true or false
+        :return: None
+        """
+        if armed is False:
+            # Red
+            instance.armed_btn.background_color([255, 0, 0, 255])
+        elif armed is True:
+            # Green
+            instance.armed_btn.background_color([0, 204, 0, 255])
+        else:
+            # Invalid input
+            pass
+
 
 class ShepardClientApp(App):
     connection = None
